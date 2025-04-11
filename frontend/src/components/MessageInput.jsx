@@ -48,32 +48,34 @@ const MessageInput = () => {
   };
 
   return (
-    <div className="p-4 w-full">
+    <div className="p-4 w-full bg-base-100 border-t border-base-300">
       {imagePreview && (
         <div className="mb-3 flex items-center gap-2">
-          <div className="relative">
+          <div className="relative group">
             <img
               src={imagePreview}
               alt="Preview"
-              className="w-20 h-20 object-cover rounded-lg border border-zinc-700"
+              className="w-24 h-24 object-cover rounded-lg border-2 border-primary/50 shadow-sm transition-all duration-200 group-hover:border-primary/80"
             />
             <button
               onClick={removeImage}
-              className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-base-300
-              flex items-center justify-center"
+              className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-error text-error-content
+              flex items-center justify-center shadow-md hover:scale-105 transition-transform"
               type="button"
+              aria-label="Remove image"
             >
-              <X className="size-3" />
+              <X className="size-4" />
             </button>
           </div>
+          <span className="text-sm text-base-content/60">Image ready to send</span>
         </div>
       )}
 
       <form onSubmit={handleSendMessage} className="flex items-center gap-2">
-        <div className="flex-1 flex gap-2">
+        <div className="flex-1 flex gap-2 relative">
           <input
             type="text"
-            className="w-full input input-bordered rounded-lg input-sm sm:input-md"
+            className="w-full input input-bordered rounded-full pl-4 pr-12 py-2 bg-base-200 focus:bg-base-100 focus:ring-2 focus:ring-primary/50 border-none transition-all duration-200"
             placeholder="Type a message..."
             value={text}
             onChange={(e) => setText(e.target.value)}
@@ -88,22 +90,27 @@ const MessageInput = () => {
 
           <button
             type="button"
-            className={`hidden sm:flex btn btn-circle
-                     ${imagePreview ? "text-emerald-500" : "text-zinc-400"}`}
+            className={`absolute right-2 top-1/2 -translate-y-1/2 p-1 rounded-full transition-all duration-200
+                      ${imagePreview ? "text-primary" : "text-base-content/50 hover:text-base-content"}
+                      hover:bg-base-300/50`}
             onClick={() => fileInputRef.current?.click()}
+            aria-label="Attach image"
           >
-            <Image size={20} />
+            <Image size={22} />
           </button>
         </div>
         <button
           type="submit"
-          className="btn btn-sm btn-circle"
+          className={`btn btn-circle btn-primary ${(!text.trim() && !imagePreview) ? 'btn-disabled opacity-50' : ''} 
+                    transition-transform hover:scale-105 active:scale-95`}
           disabled={!text.trim() && !imagePreview}
+          aria-label="Send message"
         >
-          <Send size={22} />
+          <Send size={20} />
         </button>
       </form>
     </div>
   );
 };
+
 export default MessageInput;
