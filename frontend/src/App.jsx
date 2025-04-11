@@ -9,6 +9,8 @@ import ProfilePage from "./pages/ProfilePage.jsx"
 import useAuthStore from "./store/useAuthStore.js"
 import {Loader} from "lucide-react"
 import toast,{Toaster} from "react-hot-toast"
+import ThemeProvider from "./components/ThemeProvider.jsx"
+import ThemeSettingsPage from "./pages/Settings.jsx"
 const App = () => {
   const {checkAuth,authUser,isCheckingAuth} = useAuthStore()
   useEffect(() => {
@@ -27,6 +29,7 @@ const App = () => {
   return (
     <div>
       {!hideNavbar && <Navbar/>}
+      <ThemeProvider>
       <Routes>
         <Route path="/" element={authUser ? <HomePage/> : <Navigate to="/login"/>}/>
         <Route path="/signup" element={!authUser ? <SignUpPage/>: <Navigate to="/"/>}/>
@@ -34,7 +37,7 @@ const App = () => {
         <Route path="/settings" element={authUser ? <Settings/> : <Navigate to="/login"/>}/>
         <Route path="/profile" element={authUser ? <ProfilePage/> : <Navigate to="/login"/>}/>
       </Routes>
-
+      </ThemeProvider>
       <Toaster />
     </div>
   )
