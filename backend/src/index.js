@@ -16,7 +16,7 @@ app.use(cors({
 app.use(express.json({limit : "10mb"}))
 app.use(cookieParser())
 app.use('/api/auth',authRoutes)
-app.use("/api/message",messageRoutes)
+app.use("/api/messages",messageRoutes)
 
 app.listen(process.env.PORT,()=>{
   console.log("Server is running on port "+process.env.PORT)
