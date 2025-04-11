@@ -12,7 +12,7 @@ import toast,{Toaster} from "react-hot-toast"
 import ThemeProvider from "./components/ThemeProvider.jsx"
 import ThemeSettingsPage from "./pages/Settings.jsx"
 const App = () => {
-  const {checkAuth,authUser,isCheckingAuth} = useAuthStore()
+  const {checkAuth,authUser,isCheckingAuth,onlineUsers} = useAuthStore()
   useEffect(() => {
     checkAuth()
   },[checkAuth])
@@ -23,6 +23,9 @@ const App = () => {
       </div>
      )
   }
+  
+  console.log(onlineUsers)
+
   console.log({authUser})
   const location = useLocation()
   const hideNavbar = location.pathname == "/login" || location.pathname == "/signup"

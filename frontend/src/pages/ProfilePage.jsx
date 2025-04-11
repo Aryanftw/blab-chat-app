@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { useAuthStore } from "../store/useAuthStore";
-import { Camera, Mail, User, Calendar, Shield } from "lucide-react";
+import { Camera, Mail, User, Calendar, Shield, X } from "lucide-react";
 
 const ProfilePage = () => {
   const { authUser, isUpdatingProfile, updateProfile } = useAuthStore();
   const [selectedImg, setSelectedImg] = useState(null);
+  const [isImageOpen, setIsImageOpen] = useState(false);
 
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
@@ -18,8 +19,37 @@ const ProfilePage = () => {
     };
   };
 
+  const openImageModal = () => {
+    if (authUser?.profilePic || selectedImg) {
+      setIsImageOpen(true);
+    }
+  };
+
+  const closeImageModal = () => {
+    setIsImageOpen(false);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 pt-20 px-4 pb-10">
+      {/* Image Modal */}
+      {isImageOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75 p-4">
+          <div className="relative max-w-4xl w-full max-h-[90vh]">
+            <button
+              onClick={closeImageModal}
+              className="absolute -top-10 right-0 text-white hover:text-gray-300 transition-colors duration-200"
+            >
+              <X className="w-8 h-8" />
+            </button>
+            <img
+              src={selectedImg || authUser.profilePic}
+              alt="Profile"
+              className="w-full h-full object-contain rounded-lg"
+            />
+          </div>
+        </div>
+      )}
+
       <div className="max-w-3xl mx-auto">
         <div className="bg-white dark:bg-gray-800 shadow-xl rounded-2xl overflow-hidden">
           {/* Header Banner */}
@@ -34,7 +64,8 @@ const ProfilePage = () => {
                   <img
                     src={selectedImg || authUser.profilePic || "/avatar.png"}
                     alt="Profile"
-                    className="w-32 h-32 rounded-full object-cover border-4 border-white dark:border-gray-800 bg-gray-100 dark:bg-gray-700"
+                    className="w-32 h-32 rounded-full object-cover border-4 border-white dark:border-gray-800 bg-gray-100 dark:bg-gray-700 cursor-pointer hover:opacity-90 transition-opacity duration-200"
+                    onClick={openImageModal}
                   />
                   <label
                     htmlFor="avatar-upload"
@@ -45,7 +76,6 @@ const ProfilePage = () => {
                       border-2 border-gray-200 dark:border-gray-700
                       hover:scale-110 hover:bg-gray-50 dark:hover:bg-gray-700
                       transition-all duration-200 ease-in-out
-                     
                     `}
                   >
                     <Camera className="w-5 h-5 text-blue-600 dark:text-blue-400" />
@@ -55,18 +85,13 @@ const ProfilePage = () => {
                       className="hidden"
                       accept="image/*"
                       onChange={handleImageUpload}
-                      
                     />
                   </label>
                 </div>
               </div>
               <h1 className="mt-4 text-2xl font-bold text-gray-900 dark:text-white">{authUser?.fullName}</h1>
               <p className="text-gray-500 dark:text-gray-400">{authUser?.email}</p>
-              {!isUpdatingProfile && (
-                <span className="mt-2 text-sm bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-3 py-1 rounded-full animate-pulse">
-                  Updating profile...
-                </span>
-              )}
+              
             </div>
 
             {/* Main Content */}
