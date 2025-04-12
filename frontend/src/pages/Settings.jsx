@@ -67,13 +67,13 @@ const ThemeSettingsPage = () => {
                   
                   {/* Example content */}
                   <div className="space-y-3 mt-6">
-                    <div className="p-3 rounded bg-opacity-20 bg-white">
-                      <p className="font-medium">User</p>
+                    <div className="p-3 rounded bg-opacity-20 bg-black">
+                      <p className="font-medium">User :</p>
                       <p>How do I change my theme settings?</p>
                     </div>
                     
-                    <div className="p-3 rounded bg-opacity-10 bg-white">
-                      <p className="font-medium">AI Assistant</p>
+                    <div className="p-3 rounded bg-opacity-10 bg-black">
+                      <p className="font-medium">Support : </p>
                       <p>You can select from any of the available themes in the settings panel on the left!</p>
                     </div>
                   </div>
